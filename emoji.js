@@ -196,11 +196,13 @@ function nextEmoji() {
     currentEmojiIndex = 0; 
     score = 0; 
     alert("You've completed all emojis! Starting over.");
+    showShareButton(); // Show the share button when the quiz is completed
   }
 
   displayEmoji(); 
   resultText.textContent = '';  // Clear the result text
   scoreText.textContent = `Score: ${score}`;  // Reset score text
+  inputEl.disabled = false;
 }
 
 
@@ -215,3 +217,4 @@ inputEl.addEventListener('keydown', (event) => {
     checkGuess();
   }
 }); 
+
