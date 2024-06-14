@@ -1,4 +1,17 @@
 
+document.addEventListener('DOMContentLoaded', () => {
+  const name = prompt("Whats your name"); 
+  const mainContainer = document.querySelector(".container");
+
+  const nameHeading = document.createElement("h2");
+  nameHeading.className = "name-heading";
+  nameHeading.textContent = `Welcome ${name}😊`
+  mainContainer.insertBefore(nameHeading, mainContainer.firstChild);
+});
+
+
+
+
 const emojiDetails = [
   { description: 'Smiling face with sunglasses', emoji: '😎' },
   { description: 'Thumbs up', emoji: '👍' },
@@ -98,17 +111,49 @@ scoreEl.append(scoreText);
 
 var currentEmojiIndex = 0; 
 var score = 0; 
+var timer; 
+var timeInterval; 
 
 
+const timerEl = document.getElementById("timer-section"); 
+const subTimer = document.createElement("h3"); 
+
+timerEl.append(subTimer); 
+
+//timer function
+
+var seconds = 30;
+
+
+function startTimer() {
+  timeInterval = setInterval(()=>{
+    seconds--;
+    subTimer.textContent = `Time left : ${seconds}s`;
+
+    if (seconds <= 0) {
+      endGame(); 
+      nextEmoji();
+    }
+  }, 1000);
+}
+
+
+function endGame() {
+  clearInterval(timeInterval);
+  inputEl.disabled =true; 
+}
 
 function displayEmoji() {
   emojiContainer.textContent = emojiDetails[currentEmojiIndex].emoji; 
+  subTimer.textContent = `Time left : ${seconds}s`;
+
 }
 
 
 // displayEmoji();
 
 function checkGuess() {
+  
   const guess = inputEl.value.trim().toLowerCase(); 
 
   const correctEmoji = emojiDetails[currentEmojiIndex].description.trim().toLowerCase();
@@ -129,27 +174,40 @@ function checkGuess() {
   scoreText.textContent = `Score : ${score}`; 
 
   inputEl.value = ''; 
+ 
   inputEl.focus(); 
-  nextEmoji(); 
+
+  clearTimeout(timer);  
+
+  timer = setTimeout(nextEmoji, 1500); 
+  // nextEmoji(); 
 }
 
 // checkGuess();
 
 
 function nextEmoji() {
+  clearInterval(timeInterval); // Clear the current interval
+  seconds = 30; // Reset the seconds
+  startTimer(); // Restart the timer
   currentEmojiIndex++; 
 
   if (currentEmojiIndex === emojiDetails.length) {
     currentEmojiIndex = 0; 
+    score = 0; 
+    alert("You've completed all emojis! Starting over.");
   }
 
   displayEmoji(); 
+  resultText.textContent = '';  // Clear the result text
+  scoreText.textContent = `Score: ${score}`;  // Reset score text
 }
 
 
 
 document.addEventListener('DOMContentLoaded', () => {
   displayEmoji(); 
+  startTimer();
 })
 
 inputEl.addEventListener('keydown', (event) => {

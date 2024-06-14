@@ -45,5 +45,15 @@ body {
   /* width: 5rem;
   height: 5rem; */
   font-size: 80px;
+  padding: 0.5rem;
   margin: 1rem;
+  /* border: 1px transparent; */
+  border-radius: 5rem;
+  box-shadow: 0 0 10px #f99185;
+  transition: box-shadow 0.3s ease;
+}
+
+.name-heading{
+  color: rgb(255, 102, 0);
+  font-family: cursive;
 }
